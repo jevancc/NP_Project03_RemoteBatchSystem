@@ -1,0 +1,38 @@
+{
+  "name": "np_project03_remote_batch_system",
+  "version": "1.0.0",
+  "description": "NCTUCS Network Programming 2018 Fall Project 03 - Remote Batch System",
+  "scripts": {
+    "format": "npm run format:js && npm run format:cpp",
+    "format:js": "npx prettier --loglevel warn --write \"{src,util}/**/*.{ts,js,json,css,vue,html}\" \"*.{ts,js,json}\" \"test/*.js\" \"test/{lib}/*.js\"",
+    "format:cpp": "node node_modules/clang-format/index.js -i --glob=\"src/**/*.@(c|cpp|cc|h|hpp|hh)\"",
+    "build": "npm run build:web && make all",
+    "build:web": "parcel build ./src/console_cgi/web/index.html -d build/web --public-url .",
+    "start": "make run",
+    "start:console": "node util/ConsoleTestServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jevancc/NP_Project03_RemoteBatchSystem.git"
+  },
+  "author": "Jevan Chan <jevan.cnchan@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/jevancc/NP_Project03_RemoteBatchSystem/issues"
+  },
+  "homepage": "https://github.com/jevancc/NP_Project03_RemoteBatchSystem#readme",
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^2.5.2",
+    "clang-format": "^1.2.4",
+    "parcel-bundler": "^1.11.0",
+    "parcel-plugin-inliner": "^1.0.3",
+    "prettier": "^1.16.3",
+    "should": "^13.2.3",
+    "vue-template-compiler": "^2.6.1"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "jquery-ui-dist": "^1.12.1",
+    "vue": "^2.6.1",
+    "vue-hot-reload-api": "^2.3.1"
+  }
+}
