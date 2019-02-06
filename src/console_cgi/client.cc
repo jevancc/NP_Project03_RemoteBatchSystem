@@ -101,6 +101,9 @@ void Client::DoWrite_() {
           if (!ec) {
             terminal_.GotoNextCommand();
             DoRead_();
+          } else {
+            terminal_.DisplayError(fmt::format(
+                "socket.async_send(): An error occurred:\n{}\n", ec.message()));
           }
         });
   }
