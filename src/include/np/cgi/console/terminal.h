@@ -22,8 +22,8 @@ class WebTerminal {
   void DisplayOutput(const string& s);
   void DisplayError(const string& s);
 };
-}  // namespace console
 
+}  // namespace console
 }  // namespace cgi
 }  // namespace np
 
