@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="app-background">
     <v-terminal
       v-for="(terminal, i) in terminals"
       :terminal="terminal"
-      :initialPosition="{ top: i * 30 + 20, left: i * 100 + 20 }"
       v-on:focus-terminal="onFocusTerminal"
     >
     </v-terminal>
@@ -45,7 +44,13 @@ export default {
         display: {
           minimized: false,
           closed: false,
-          zIndex: this.terminals.length
+          style: {
+            w: 600,
+            h: 425,
+            x: this.terminals.length * 30 + 20,
+            y: this.terminals.length * 100 + 20,
+            z: this.terminals.length
+          }
         }
       });
     },
@@ -73,13 +78,63 @@ export default {
     onFocusTerminal(terminal) {
       let newZIndex = this.terminals.length;
       this.terminals.forEach(t => {
-        if (t.display.zIndex > terminal.display.zIndex) {
-          t.display.zIndex--;
+        if (t.display.style.z > terminal.display.style.z) {
+          t.display.style.z--;
         }
       });
-      terminal.display.zIndex = newZIndex;
+      terminal.display.style.z = newZIndex;
     }
   }
 };
 </script>
-<style></style>
+<style>
+.app-background {
+  height: 100%;
+  width: 100%;
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
+}
+
+.vdr {
+  border-width: 0px !important;
+}
+
+.handle {
+  background-color: transparent !important;
+  border-width: 0px !important;
+}
+.handle.handle-tm {
+  width: 100% !important;
+  left: 5px !important;
+}
+.handle.handle-bm {
+  width: 100% !important;
+  left: 5px !important;
+}
+.handle.handle-mr {
+  height: 100% !important;
+  top: 5px !important;
+}
+.handle.handle-ml {
+  height: 100% !important;
+  top: 5px !important;
+}
+.handle.handle-tm {
+  width: 100% !important;
+  left: 5px !important;
+}
+.handle.handle-bm {
+  width: 100% !important;
+  left: 5px !important;
+}
+.handle.handle-mr {
+  height: 100% !important;
+  top: 5px !important;
+}
+.handle.handle-ml {
+  height: 100% !important;
+  top: 5px !important;
+}
+</style>

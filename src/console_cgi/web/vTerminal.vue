@@ -1,12 +1,20 @@
 <template>
-  <div
+  <vue-draggable-resizable
     class="window"
-    ref="window"
-    :style="{ 'z-index': terminal.display.zIndex }"
     v-show="!terminal.display.closed && !terminal.display.minimized"
-    @mousedown="$emit('focus-terminal', terminal)"
+    drag-handle=".window-menu"
+    :w="terminal.display.style.w"
+    :h="terminal.display.style.h"
+    :x="terminal.display.style.x"
+    :y="terminal.display.style.y"
+    :z="terminal.display.style.z"
+    :minWidth="400"
+    :minHeight="200"
+    :parent="true"
+    :active="true"
+    :prevent-deactivation="true"
   >
-    <div class="window-menu" ref="window-menu">
+    <div class="window-menu" @mousedown="$emit('focus-terminal', terminal)">
       <div class="window-button window-button-close" @click="close()"></div>
       <div
         class="window-button window-button-minimize"
@@ -17,7 +25,10 @@
         {{ terminal.host }}:{{ terminal.port }} - {{ terminal.file }}
       </div>
     </div>
-    <div class="window-screen scroll">
+    <div
+      class="window-screen scroll"
+      @mousedown="$emit('focus-terminal', terminal)"
+    >
       <span v-for="(line, i) in terminal.data">
         <pre
           v-if="line.command !== null"
@@ -27,13 +38,13 @@
               : 'unexecuted-prompt-text'
           ]"
         >
-%&nbsp;{{ line.command }}</pre
+  %&nbsp;{{ line.command }}</pre
         >
         <pre v-if="line.output">{{ line.output }}</pre>
         <pre class="error-text" v-if="line.error">{{ line.error }}</pre>
       </span>
     </div>
-  </div>
+  </vue-draggable-resizable>
 </template>
 <script>
 export default {
@@ -43,33 +54,20 @@ export default {
       this.terminal.display.minimized = true;
     },
     zoom() {
-      $(this.$refs.window)
-        .height($(window).height() - 50)
-        .width($(window).width() - 50)
-        .center();
+      this.terminal.display.style.x = 25;
+      this.terminal.display.style.y = 25;
+      this.terminal.display.style.h = window.innerHeight - 50;
+      this.terminal.display.style.w = window.innerWidth - 50;
     },
     close() {
       this.terminal.display.closed = true;
     }
   },
-  mounted() {
-    $(this.$refs.window)
-      .offset(this.initialPosition)
-      .draggable({
-        handle: ".window-menu"
-      })
-      .resizable({
-        minWidth: 400,
-        minHeight: 200,
-        handles: "n, e, s, w, se, ne, sw, nw"
-      });
-  }
+  mounted() {}
 };
 </script>
 <style scoped>
 .window {
-  width: 600px;
-  height: 425px;
   margin: 0px;
   padding-bottom: 25px;
   position: absolute;
@@ -131,7 +129,7 @@ export default {
   position: relative;
   background-color: #151515;
   box-sizing: border-box;
-  top: 25px;
+  margin-top: 25px;
   width: 100%;
   height: 100%;
   padding: 5px 20px;

@@ -1,32 +1,10 @@
-let jquery = require("jquery");
-window.$ = window.jQuery = jquery;
-
-require("jquery-ui-dist/jquery-ui.js");
-import "jquery-ui-dist/jquery-ui.css";
-
-$(function() {
-  jQuery.fn.center = function() {
-    this.css("position", "absolute");
-    this.css(
-      "top",
-      Math.max(
-        0,
-        ($(window).height() - $(this).outerHeight()) / 2 + $(window).scrollTop()
-      ) + "px"
-    );
-    this.css(
-      "left",
-      Math.max(
-        0,
-        ($(window).width() - $(this).outerWidth()) / 2 + $(window).scrollLeft()
-      ) + "px"
-    );
-    return this;
-  };
-});
-
 import Vue from "vue";
 import App from "./app";
+
+import VueDraggableResizable from "vue-draggable-resizable";
+// optionally import default styles
+import "vue-draggable-resizable/dist/VueDraggableResizable.css";
+Vue.component("vue-draggable-resizable", VueDraggableResizable);
 
 window.app = new Vue({
   el: "#app",

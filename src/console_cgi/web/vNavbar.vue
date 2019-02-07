@@ -25,7 +25,7 @@ export default {
           t =>
             !t.display.closed &&
             !t.display.minimized &&
-            t.display.zIndex > terminal.display.zIndex
+            t.display.style.z > terminal.display.style.z
         )
       ) {
         terminal.display.minimized = true;
