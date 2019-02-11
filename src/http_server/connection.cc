@@ -48,12 +48,10 @@ void Connection::HandleRequest_(bool is_good_request) {
     if (filesystem::is_regular_file(execfile)) {
       is_ok = true;
       reply_msg +=
-          "HTTP/1.1 200 OK\r\n"
-          "Connection: close\r\n";
+          "HTTP/1.1 200 OK\r\n";
     } else {
       reply_msg +=
           "HTTP/1.1 404 Not Found\r\n"
-          "Connection: close\r\n"
           "Content-Length: 20\r\n"
           "\r\n"
           "<h1>Not Found</h1>\r\n";
@@ -61,7 +59,6 @@ void Connection::HandleRequest_(bool is_good_request) {
   } else {
     reply_msg +=
         "HTTP/1.0 400 Bad Request\r\n"
-        "Connection: close\r\n"
         "\r\n";
   }
 
